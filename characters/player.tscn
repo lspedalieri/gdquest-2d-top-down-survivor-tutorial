@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://cp31q440jbfpg"]
+
+[ext_resource type="Script" path="res://characters/player.gd" id="1_ndwa6"]
+[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="1_ppkw6"]
+[ext_resource type="PackedScene" uid="uid://vhv1ug5m7pgv" path="res://gun.tscn" id="3_i7ejd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ijnx7"]
+size = Vector2(80, 40)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wj5oe"]
+bg_color = Color(0.156863, 0.0784314, 0.305882, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6i7g"]
+bg_color = Color(0.917647, 0.207843, 0.968627, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d0k5n"]
+radius = 40.0
+height = 112.0
+
+[node name="Player" type="CharacterBody2D"]
+platform_floor_layers = 0
+script = ExtResource("1_ndwa6")
+
+[node name="HappyBoo" parent="." instance=ExtResource("1_ppkw6")]
+unique_name_in_owner = true
+position = Vector2(2, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_ijnx7")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Gun" parent="." instance=ExtResource("3_i7ejd")]
+position = Vector2(0, -40)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -40.0
+offset_top = -128.0
+offset_right = 40.0
+offset_bottom = -101.0
+theme_override_styles/background = SubResource("StyleBoxFlat_wj5oe")
+theme_override_styles/fill = SubResource("StyleBoxFlat_s6i7g")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -44)
+shape = SubResource("CapsuleShape2D_d0k5n")
